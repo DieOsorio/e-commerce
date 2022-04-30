@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { Link } from "react-router-dom";
+import Product from "../components/Product";
 // import data from "../data";
 
 const reducer = (state, action) => {
@@ -45,23 +45,13 @@ const HomeScreen = () => {
         ) : error ? (
           <div>{error}</div>
         ) : (
-          products.map((product) => (
-            <div className="product" key={product.slug}>
-              <Link to={`/product/${product.slug}`}>
-                <img src={product.image} alt={product.name} />
-              </Link>
-              <div className="product-info">
-                <Link to={`/product/${product.slug}`}>
-                  <p>{product.name}</p>
-                </Link>
-
-                <p>
-                  <strong>${product.price}</strong>
-                </p>
-                <button>Add to cart</button>
+          <div className="row">
+            {products.map((product) => (
+              <div key={product.slug} className="col-6 col-md-4 col-lg-3 mb-3">
+                <Product product={product} />
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
     </div>
