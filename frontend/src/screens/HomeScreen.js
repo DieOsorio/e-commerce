@@ -1,4 +1,5 @@
 import { useEffect, useReducer } from "react";
+import { Helmet } from "react-helmet-async";
 import Product from "../components/Product";
 // import data from "../data";
 
@@ -38,6 +39,9 @@ const HomeScreen = () => {
   }, []);
   return (
     <div>
+      <Helmet>
+        <title>Amazona</title>
+      </Helmet>
       <h1>Feature Products</h1>
       <div className="products">
         {loading ? (

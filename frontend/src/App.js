@@ -17,7 +17,7 @@ function App() {
           </nav>
         </header>
         <main>
-          <div className="container">
+          <div className="container mt-3">
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/" element={<HomeScreen />} />
