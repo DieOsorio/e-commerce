@@ -1,5 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { Helmet } from "react-helmet-async";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 // import data from "../data";
 
@@ -28,6 +30,9 @@ const HomeScreen = () => {
     dispatch({ type: "FETCH_REQUEST" });
     try {
       const response = await fetch("/api/products");
+      if (!response.ok) {
+        throw new Error(`An error has occured: ${response.status}`);
+      }
       const result = await response.json();
       dispatch({ type: "FETCH_SUCCESS", payload: result });
     } catch (err) {
@@ -45,9 +50,9 @@ const HomeScreen = () => {
       <h1>Feature Products</h1>
       <div className="products">
         {loading ? (
-          <div>Loading...</div>
+          <LoadingBox />
         ) : error ? (
-          <div>{error}</div>
+          <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <div className="row">
             {products.map((product) => (

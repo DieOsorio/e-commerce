@@ -1,7 +1,10 @@
 import { useEffect, useReducer } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 import Rating from "../components/Rating";
+import { getError } from "../utils";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -30,10 +33,13 @@ function ProductScreen() {
     dispatch({ type: "FETCH_REQUEST" });
     try {
       const response = await fetch(`/api/products/slug/${slug}`);
-      const result = await response.json();
-      dispatch({ type: "FETCH_SUCCESS", payload: result });
-    } catch (err) {
-      dispatch({ type: "FETCH_FAIL", payload: err.message });
+      if (!response.ok) {
+        throw new Error("Product not found");
+      }
+      const products = await response.json();
+      dispatch({ type: "FETCH_SUCCESS", payload: products });
+    } catch (error) {
+      dispatch({ type: "FETCH_FAIL", payload: getError(error) });
     }
   };
   useEffect(() => {
@@ -41,9 +47,9 @@ function ProductScreen() {
   }, [slug]);
 
   return loading ? (
-    <div>Loading...</div>
+    <LoadingBox />
   ) : error ? (
-    <div>{error}</div>
+    <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div>
       <div className="row">
@@ -92,13 +98,13 @@ function ProductScreen() {
                 </li>
                 <li className="list-group-item">
                   {product.countInStock > 0 && (
-                    <li className="list-group-item">
+                    <div className="list-group-item">
                       <div className="d-grid">
                         <a href="" className="btn btn-primary">
                           Add to Cart
                         </a>
                       </div>
-                    </li>
+                    </div>
                   )}
                 </li>
               </ul>
