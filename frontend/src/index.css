@@ -16,6 +16,9 @@ main {
   background-color: #f0c040;
   color: black;
 }
+.point {
+  cursor: pointer;
+}
 .products {
   display: flex;
   flex-wrap: wrap;
@@ -40,4 +43,7 @@ main {
 }
 .img-thumbnail {
   height: 80px;
+}
+.small-container {
+  max-width: 600px;
 }
