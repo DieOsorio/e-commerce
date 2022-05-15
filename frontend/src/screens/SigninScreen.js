@@ -29,8 +29,9 @@ const SigninScreen = () => {
         ctxDispatch({ type: "USER_SIGNIN", payload: data });
         localStorage.setItem("userInfo", JSON.stringify(data));
         navigate(redirect || "/");
+      } else {
+        throw new Error("Invalid email or password");
       }
-      throw new Error("Invalid email or password");
     } catch (err) {
       toast.error(err.message);
     }

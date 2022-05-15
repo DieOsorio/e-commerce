@@ -30,11 +30,12 @@ const HomeScreen = () => {
     dispatch({ type: "FETCH_REQUEST" });
     try {
       const response = await fetch("/api/products");
-      if (!response.ok) {
+      if (response.ok) {
+        const result = await response.json();
+        dispatch({ type: "FETCH_SUCCESS", payload: result });
+      } else {
         throw new Error(`An error has occured: ${response.status}`);
       }
-      const result = await response.json();
-      dispatch({ type: "FETCH_SUCCESS", payload: result });
     } catch (err) {
       dispatch({ type: "FETCH_FAIL", payload: err.message });
     }
