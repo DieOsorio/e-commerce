@@ -26,25 +26,24 @@ const HomeScreen = () => {
     products: [],
   });
 
-  const fetchData = async () => {
-    dispatch({ type: "FETCH_REQUEST" });
-    try {
-      const response = await fetch("/api/products");
-      if (response.ok) {
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: "FETCH_REQUEST" });
+      try {
+        const response = await fetch("/api/products");
+        if (!response.ok)
+          throw new Error(`An error has occured: ${response.status}`);
+
         const result = await response.json();
         dispatch({ type: "FETCH_SUCCESS", payload: result });
-      } else {
-        throw new Error(`An error has occured: ${response.status}`);
+      } catch (err) {
+        dispatch({ type: "FETCH_FAIL", payload: err.message });
       }
-    } catch (err) {
-      dispatch({ type: "FETCH_FAIL", payload: err.message });
-    }
-  };
-  useEffect(() => {
+    };
     fetchData();
   }, []);
   return (
-    <div>
+    <>
       <Helmet>
         <title>Amazona</title>
       </Helmet>
@@ -64,7 +63,7 @@ const HomeScreen = () => {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

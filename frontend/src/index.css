@@ -15,6 +15,22 @@ main {
 .btn-primary {
   background-color: #f0c040;
   color: black;
+  border: #404040 solid 1px;
+}
+.btn-primary:hover {
+  background-color: #404040;
+  border: #404040 solid 1px;
+}
+.link-color {
+  color: #8f8f8f;
+  font-weight: 500;
+  margin-top: 6px;
+}
+.link-color:hover {
+  color: #bbbbbb;
+}
+.link-color:focus {
+  color: #bbbbbb;
 }
 .point {
   cursor: pointer;

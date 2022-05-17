@@ -31,20 +31,21 @@ function ProductScreen() {
     product: [],
   });
 
-  const fetchData = async () => {
-    dispatch({ type: "FETCH_REQUEST" });
-    try {
-      const response = await fetch(`/api/products/slug/${slug}`);
-      if (!response.ok) {
-        throw new Error("Product not found");
-      }
-      const products = await response.json();
-      dispatch({ type: "FETCH_SUCCESS", payload: products });
-    } catch (error) {
-      dispatch({ type: "FETCH_FAIL", payload: getError(error) });
-    }
-  };
   useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: "FETCH_REQUEST" });
+      try {
+        const response = await fetch(`/api/products/slug/${slug}`);
+        if (response.ok) {
+          const products = await response.json();
+          dispatch({ type: "FETCH_SUCCESS", payload: products });
+        } else {
+          throw new Error("Product not found");
+        }
+      } catch (error) {
+        dispatch({ type: "FETCH_FAIL", payload: getError(error) });
+      }
+    };
     fetchData();
   }, [slug]);
 
@@ -71,7 +72,7 @@ function ProductScreen() {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div>
+    <>
       <div className="row">
         <div className="col-md-6">
           <img src={product.image} alt={product.name} className="img-large" />
@@ -120,13 +121,12 @@ function ProductScreen() {
                   {product.countInStock > 0 && (
                     <div className="list-group-item">
                       <div className="d-grid">
-                        <a
+                        <button
                           onClick={addToCartHandler}
-                          href=""
                           className="btn btn-primary"
                         >
                           Add to Cart
-                        </a>
+                        </button>
                       </div>
                     </div>
                   )}
@@ -136,7 +136,7 @@ function ProductScreen() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

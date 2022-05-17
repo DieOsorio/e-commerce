@@ -33,7 +33,7 @@ const CartScreen = () => {
   };
 
   return (
-    <div>
+    <>
       <Helmet>
         <title>Shopping Cart</title>
       </Helmet>
@@ -120,7 +120,7 @@ const CartScreen = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

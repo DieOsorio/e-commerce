@@ -9,6 +9,7 @@ import { Store } from "./Store";
 import CartScreen from "./screens/CartScreen";
 import SigninScreen from "./screens/SigninScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
+import SignupScreen from "./screens/SignupScreen";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -31,7 +32,7 @@ function App() {
                 <div className="navbar-brand">amazona</div>
               </LinkContainer>
               <nav className="nav me-auto">
-                <Link to="/cart" className="nav-link">
+                <Link to="/cart" className="nav-link link-color">
                   Cart
                   {cart.cartItems.length > 0 && (
                     <span className="badge bg-danger">
@@ -41,15 +42,14 @@ function App() {
                 </Link>
                 {userInfo ? (
                   <li className="nav-item dropdown">
-                    <a
-                      className="nav-link dropdown-toggle"
+                    <button
+                      className="nav-link dropdown-toggle bg-dark link-color"
                       data-bs-toggle="dropdown"
-                      href="#"
-                      role="button"
                       aria-expanded="false"
+                      style={{ border: "none" }}
                     >
                       {userInfo.name}
-                    </a>
+                    </button>
                     <ul className="dropdown-menu">
                       <li>
                         <Link className="dropdown-item" to="/profile">
@@ -78,7 +78,7 @@ function App() {
                     </ul>
                   </li>
                 ) : (
-                  <Link className="nav-link" to="/signin">
+                  <Link className="nav-link link-color" to="/signin">
                     Sign In
                   </Link>
                 )}
@@ -92,6 +92,7 @@ function App() {
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
+              <Route path="/signup" element={<SignupScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
