@@ -57,7 +57,6 @@ const PlaceOrderScreen = () => {
         }),
       });
       const data = await response.json();
-      console.log(data);
       ctxDispatch({ type: "CART_CLEAR" });
       dispatch({ type: "CREATE_SUCCESS" });
       localStorage.removeItem("cartItems");
